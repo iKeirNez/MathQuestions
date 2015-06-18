@@ -40,10 +40,10 @@
             End If
 
             If numberTwo = 1 Then
-                    numberTwo += 1
-                End If
+                numberTwo += 1
+            End If
 
-                answer = numberOne * numberTwo
+            answer = numberOne * numberTwo
         End If
 
         Dim question As String = Utilities.SuperSimpleRubbishFormat(numberOne) & " " & randomOperator & " " & Utilities.SuperSimpleRubbishFormat(numberTwo)
