@@ -52,8 +52,9 @@
 
     Public Function getRandomOperator() As String
         Dim randomNumber As Integer = getRandomNumber(0, 100)
-        Dim divideChance As Integer = divideChance * 100
-        Dim otherChance As Integer = divideChance / 3
+        Dim otherChance As Single = (100 - divideChance) / 3
+
+        MsgBox("RanNum: " & randomNumber & vbCrLf & "DivCh: " & divideChance & vbCrLf & "Other Chance: " & otherChance)
 
         If randomNumber <= divideChance Then
             Return "/"
