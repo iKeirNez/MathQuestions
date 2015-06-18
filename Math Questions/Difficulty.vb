@@ -22,12 +22,23 @@
         Dim randomOperator As String = getRandomOperator()
         Dim answer As Single
 
-        If randomOperator = "/" Then
+        If randomOperator = "/" Then 'Todo divide always returns half of numberOne :/
             If numberTwo > numberOne Then
                 Dim numberOneCopy As Single = numberOne
                 numberOne = numberTwo
                 numberTwo = numberOneCopy
             End If
+
+            Dim tries As Integer = 0
+            Do While numberOne = numberTwo Or Not numberOne Mod numberTwo = 0
+                numberTwo = getRandomNumber(minimumNumber, numberOne - 1)
+                tries += 1
+
+                If tries >= 200 Then 'Give in
+                    randomOperator = "+"
+                    Exit Do
+                End If
+            Loop
 
             answer = numberOne / numberTwo
         ElseIf randomOperator = "+" Then
@@ -53,8 +64,6 @@
     Public Function getRandomOperator() As String
         Dim randomNumber As Integer = getRandomNumber(0, 100)
         Dim otherChance As Single = (100 - divideChance) / 3
-
-        MsgBox("RanNum: " & randomNumber & vbCrLf & "DivCh: " & divideChance & vbCrLf & "Other Chance: " & otherChance)
 
         If randomNumber <= divideChance Then
             Return "/"
