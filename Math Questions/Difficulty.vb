@@ -35,6 +35,12 @@
         ElseIf randomOperator = "-" Then
             answer = numberOne - numberTwo
         ElseIf randomOperator = "*" Then
+            If numberOne = 1 Then 'Lets not make this too easy
+                numberOne += 1
+            ElseIf numberTwo = 1 Then
+                numberTwo += 1
+            End If
+
             answer = numberOne * numberTwo
         End If
 
