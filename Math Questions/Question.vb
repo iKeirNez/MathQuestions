@@ -26,8 +26,8 @@
 
         If userAttempt = question.Item2 Then
             If questionNumber < main.maxQuestions Then
-                If Not TextBoxGreen.IsBusy Then
-                    TextBoxGreen.RunWorkerAsync()
+                If Not InputGreenBackgroundWorker.IsBusy Then
+                    InputGreenBackgroundWorker.RunWorkerAsync()
                 Else
                     newQuestion()
                 End If
@@ -35,15 +35,15 @@
                 MsgBox("All done. (maybe show some statistics here in future).")
             End If
         Else
-            If TextBoxRed.IsBusy And Not TextBoxRed.CancellationPending Then
-                TextBoxRed.CancelAsync()
+            If InputRedBackgroundWorker.IsBusy And Not InputRedBackgroundWorker.CancellationPending Then
+                InputRedBackgroundWorker.CancelAsync()
             End If
 
-            While TextBoxRed.IsBusy Or TextBoxRed.CancellationPending
+            While InputRedBackgroundWorker.IsBusy Or InputRedBackgroundWorker.CancellationPending
                 Application.DoEvents() 'Keep UI responsive
             End While
 
-            TextBoxRed.RunWorkerAsync()
+            InputRedBackgroundWorker.RunWorkerAsync()
             lastAttemptLabel.Text = "Last Attempt: " & vbCrLf & FormatNumber(userAttempt)
         End If
     End Sub
@@ -67,13 +67,13 @@
         End If
     End Sub
 
-    Private Sub TextBoxGreen_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles TextBoxGreen.DoWork
+    Private Sub InputGreenBackgroundWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles InputGreenBackgroundWorker.DoWork
         AnswerInput.Invoke(Sub() AnswerInput.BackColor = Color.Green)
         Threading.Thread.Sleep(500)
         Me.Invoke(Sub() newQuestion())
     End Sub
 
-    Private Sub TextBoxRed_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles TextBoxRed.DoWork
+    Private Sub InputRedBackgroundWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles InputRedBackgroundWorker.DoWork
         AnswerInput.Invoke(Sub() AnswerInput.BackColor = Color.Red)
         Threading.Thread.Sleep(500)
         AnswerInput.Invoke(Sub() AnswerInput.BackColor = Color.FromKnownColor(KnownColor.Window))

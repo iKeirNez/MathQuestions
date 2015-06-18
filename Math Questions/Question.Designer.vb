@@ -27,8 +27,8 @@ Partial Class Question
         Me.AnswerInput = New System.Windows.Forms.TextBox()
         Me.SkipButton = New System.Windows.Forms.Button()
         Me.EnterButton = New System.Windows.Forms.Button()
-        Me.TextBoxGreen = New System.ComponentModel.BackgroundWorker()
-        Me.TextBoxRed = New System.ComponentModel.BackgroundWorker()
+        Me.InputGreenBackgroundWorker = New System.ComponentModel.BackgroundWorker()
+        Me.InputRedBackgroundWorker = New System.ComponentModel.BackgroundWorker()
         Me.SuspendLayout()
         '
         'questionLabel
@@ -76,11 +76,11 @@ Partial Class Question
         '
         'TextBoxGreen
         '
-        Me.TextBoxGreen.WorkerSupportsCancellation = True
+        Me.InputGreenBackgroundWorker.WorkerSupportsCancellation = True
         '
         'TextBoxRed
         '
-        Me.TextBoxRed.WorkerSupportsCancellation = True
+        Me.InputRedBackgroundWorker.WorkerSupportsCancellation = True
         '
         'Question
         '
@@ -105,6 +105,6 @@ Partial Class Question
     Friend WithEvents AnswerInput As TextBox
     Friend WithEvents SkipButton As Button
     Friend WithEvents EnterButton As Button
-    Friend WithEvents TextBoxGreen As System.ComponentModel.BackgroundWorker
-    Friend WithEvents TextBoxRed As System.ComponentModel.BackgroundWorker
+    Friend WithEvents InputGreenBackgroundWorker As System.ComponentModel.BackgroundWorker
+    Friend WithEvents InputRedBackgroundWorker As System.ComponentModel.BackgroundWorker
 End Class
