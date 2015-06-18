@@ -34,6 +34,7 @@
 
     Public Sub start()
         maxQuestions = Val(numberOfQuestionsInput.Text)
+        numberOfQuestionsInput.Text = ""
         newQuestion(1)
     End Sub
 
