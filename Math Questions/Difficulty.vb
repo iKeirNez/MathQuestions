@@ -46,7 +46,7 @@
             answer = numberOne * numberTwo
         End If
 
-        Dim question As String = Utilities.SuperSimpleRubbishFormat(numberOne) & " " & randomOperator & " " & Utilities.SuperSimpleRubbishFormat(numberTwo)
+        Dim question As String = SuperSimpleRubbishFormat(numberOne) & " " & randomOperator & " " & SuperSimpleRubbishFormat(numberTwo)
         Return New Tuple(Of String, Single)(question, answer)
     End Function
 
@@ -66,7 +66,11 @@
         End If
     End Function
 
-    Public Function getRandomNumber(ByVal lowerBound As Integer, ByVal upperBound As Integer) As Integer
+    Public Shared Function SuperSimpleRubbishFormat(ByVal number As Single) As String
+        Return FormatNumber(number, If(number = CInt(number), 0, 2)) 'Check if number has precision
+    End Function
+
+    Public Shared Function getRandomNumber(ByVal lowerBound As Integer, ByVal upperBound As Integer) As Integer
         Randomize()
         Return CInt(Math.Floor((upperBound - lowerBound + 1) * Rnd())) + lowerBound
     End Function
