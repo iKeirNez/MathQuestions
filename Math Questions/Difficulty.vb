@@ -3,11 +3,11 @@
     Dim divideChance, minimumNumber, maximumNumber As Single
     Dim decimalPlaces As Boolean
 
-    Sub New(ByVal divideChance As Single, ByVal minimumNumber As Single, ByVal maximumNumber As Single, ByVal decimalPlace As Boolean)
+    Sub New(ByVal divideChance As Single, ByVal minimumNumber As Single, ByVal maximumNumber As Single, ByVal decimalPlaces As Boolean)
         Me.divideChance = divideChance
-        Me.minimumNumber = If(decimalPlace, minimumNumber * 10, minimumNumber)
-        Me.maximumNumber = If(decimalPlace, maximumNumber * 10, maximumNumber)
-        Me.decimalPlaces = decimalPlace
+        Me.minimumNumber = If(decimalPlaces, minimumNumber * 10, minimumNumber)
+        Me.maximumNumber = If(decimalPlaces, maximumNumber * 10, maximumNumber)
+        Me.decimalPlaces = decimalPlaces
     End Sub
 
     Public Function getNewQuestion() As Tuple(Of String, Single)
