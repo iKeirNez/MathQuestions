@@ -34,6 +34,7 @@
                 End If
             Else
                 MsgBox("All done. (maybe show some statistics here in future).")
+                Visible = False
             End If
         Else
             If InputRedBackgroundWorker.IsBusy And Not InputRedBackgroundWorker.CancellationPending Then
