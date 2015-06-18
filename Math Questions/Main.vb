@@ -22,7 +22,7 @@
         If e.KeyChar = Convert.ToChar(Keys.Enter) Then
             e.Handled = True
             start()
-        ElseIf Not e.KeyChar = "." And Not IsNumeric(e.KeyChar) Then
+        ElseIf Not IsNumeric(e.KeyChar) Then
             e.Handled = True
             Media.SystemSounds.Exclamation.Play()
         End If
