@@ -22,7 +22,8 @@
     End Sub
 
     Public Sub checkInput()
-        Dim userAttempt As Single = Val(AnswerInput.Text)
+        Dim rawAttempt As String = AnswerInput.Text
+        Dim userAttempt As Single = Val(rawAttempt)
 
         If userAttempt = question.Item2 Then
             If questionNumber < main.maxQuestions Then
@@ -44,7 +45,7 @@
             End While
 
             InputRedBackgroundWorker.RunWorkerAsync()
-            lastAttemptLabel.Text = "Last Attempt: " & vbCrLf & FormatNumber(userAttempt)
+            lastAttemptLabel.Text = "Last Attempt: " & vbCrLf & rawAttempt
         End If
     End Sub
 

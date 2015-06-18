@@ -37,14 +37,16 @@
         ElseIf randomOperator = "*" Then
             If numberOne = 1 Then 'Lets not make this too easy
                 numberOne += 1
-            ElseIf numberTwo = 1 Then
-                numberTwo += 1
             End If
 
-            answer = numberOne * numberTwo
+            If numberTwo = 1 Then
+                    numberTwo += 1
+                End If
+
+                answer = numberOne * numberTwo
         End If
 
-        Dim question As String = FormatNumber(numberOne) & " " & randomOperator & " " & FormatNumber(numberTwo)
+        Dim question As String = Utilities.SuperSimpleRubbishFormat(numberOne) & " " & randomOperator & " " & Utilities.SuperSimpleRubbishFormat(numberTwo)
         Return New Tuple(Of String, Single)(question, answer)
     End Function
 
