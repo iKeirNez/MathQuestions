@@ -19,13 +19,20 @@
     End Sub
 
     Private Sub NumberOfQuestionsInput_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) Handles numberOfQuestionsInput.KeyPress
-        If Not e.KeyChar = "." And Not IsNumeric(e.KeyChar) Then
+        If e.KeyChar = Convert.ToChar(Keys.Enter) Then
+            e.Handled = True
+            start()
+        ElseIf Not e.KeyChar = "." And Not IsNumeric(e.KeyChar) Then
             e.Handled = True
             Media.SystemSounds.Exclamation.Play()
         End If
     End Sub
 
     Private Sub startButton_Click(sender As Object, e As EventArgs) Handles startButton.Click
+        start()
+    End Sub
+
+    Public Sub start()
         maxQuestions = Val(numberOfQuestionsInput.Text)
         newQuestion(1)
     End Sub

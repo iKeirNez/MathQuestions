@@ -18,6 +18,10 @@
     End Sub
 
     Private Sub EnterButton_Click(sender As Object, e As EventArgs) Handles EnterButton.Click
+        checkInput()
+    End Sub
+
+    Public Sub checkInput()
         Dim userAttempt As Single = Val(AnswerInput.Text)
 
         If userAttempt = question.Item2 Then
@@ -28,13 +32,18 @@
                     newQuestion()
                 End If
             Else
-                    MsgBox("All done. (maybe show some statistics here in future).")
+                MsgBox("All done. (maybe show some statistics here in future).")
             End If
         Else
-            If Not TextBoxRed.IsBusy Then
-                TextBoxRed.RunWorkerAsync()
+            If TextBoxRed.IsBusy And Not TextBoxRed.CancellationPending Then
+                TextBoxRed.CancelAsync()
             End If
 
+            While TextBoxRed.IsBusy Or TextBoxRed.CancellationPending
+                Application.DoEvents() 'Keep UI responsive
+            End While
+
+            TextBoxRed.RunWorkerAsync()
             lastAttemptLabel.Text = "Last Attempt: " & vbCrLf & FormatNumber(userAttempt)
         End If
     End Sub
@@ -48,42 +57,26 @@
         main.newQuestion(questionNumber + 1)
     End Sub
 
-    Private Sub AnswerInput_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles AnswerInput.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            newQuestion()
-        End If
-    End Sub
-
     Private Sub AnswerInput_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) Handles AnswerInput.KeyPress
-        If Not e.KeyChar = "." And Not IsNumeric(e.KeyChar) Then
+        If e.KeyChar = Convert.ToChar(Keys.Enter) Then
+            e.Handled = True
+            checkInput()
+        ElseIf Not e.KeyChar = "." And Not IsNumeric(e.KeyChar) And Not e.KeyChar = Convert.ToChar(Keys.Back) Then
             e.Handled = True
             Media.SystemSounds.Exclamation.Play()
         End If
     End Sub
 
     Private Sub TextBoxGreen_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles TextBoxGreen.DoWork
-        AnswerInput.Invoke(New delegateThing(AddressOf setInputGreen))
+        AnswerInput.Invoke(Sub() AnswerInput.BackColor = Color.Green)
         Threading.Thread.Sleep(500)
-        Me.Invoke(New delegateThing(AddressOf newQuestion))
+        Me.Invoke(Sub() newQuestion())
     End Sub
 
     Private Sub TextBoxRed_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles TextBoxRed.DoWork
-        AnswerInput.Invoke(New delegateThing(AddressOf setInputRed))
+        AnswerInput.Invoke(Sub() AnswerInput.BackColor = Color.Red)
         Threading.Thread.Sleep(500)
-        AnswerInput.Invoke(New delegateThing(AddressOf setInputNormal))
+        AnswerInput.Invoke(Sub() AnswerInput.BackColor = Color.FromKnownColor(KnownColor.Window))
     End Sub
 
-    Delegate Sub delegateThing()
-
-    Private Sub setInputGreen()
-        AnswerInput.BackColor = Color.Green
-    End Sub
-
-    Private Sub setInputRed()
-        AnswerInput.BackColor = Color.Red
-    End Sub
-
-    Private Sub setInputNormal()
-        AnswerInput.BackColor = Color.FromKnownColor(KnownColor.Window)
-    End Sub
 End Class

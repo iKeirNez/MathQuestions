@@ -76,9 +76,11 @@ Partial Class Question
         '
         'TextBoxGreen
         '
+        Me.TextBoxGreen.WorkerSupportsCancellation = True
         '
         'TextBoxRed
         '
+        Me.TextBoxRed.WorkerSupportsCancellation = True
         '
         'Question
         '
