@@ -22,14 +22,11 @@ Partial Class Main
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Me.difficultySelector = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.numberOfQuestionsInput = New System.Windows.Forms.TextBox()
         Me.startButton = New System.Windows.Forms.Button()
-        Me.Form1BindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        CType(Me.Form1BindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'difficultySelector
@@ -75,10 +72,6 @@ Partial Class Main
         Me.startButton.Text = "Start"
         Me.startButton.UseVisualStyleBackColor = True
         '
-        'Form1BindingSource
-        '
-        Me.Form1BindingSource.DataSource = GetType(WindowsApplication1.Main)
-        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -92,7 +85,6 @@ Partial Class Main
         Me.Name = "Main"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Math Questions - By Keir Nellyer"
-        CType(Me.Form1BindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -101,7 +93,6 @@ Partial Class Main
     Friend WithEvents difficultySelector As ComboBox
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents Form1BindingSource As BindingSource
     Friend WithEvents numberOfQuestionsInput As TextBox
     Friend WithEvents startButton As Button
 End Class

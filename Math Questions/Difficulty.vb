@@ -1,25 +1,27 @@
 ﻿Public Class Difficulty
 
     Dim divideChance, minimumNumber, maximumNumber As Single
+    Dim minimumDivide As Integer
     Dim decimalPlaces As Boolean
 
-    Sub New(ByVal divideChance As Single, ByVal minimumNumber As Single, ByVal maximumNumber As Single, ByVal decimalPlaces As Boolean)
+    Sub New(ByVal divideChance As Single, ByVal minimumDivide As Integer, ByVal minimumNumber As Single, ByVal maximumNumber As Single, ByVal decimalPlaces As Boolean)
         Me.divideChance = divideChance
-        Me.minimumNumber = If(decimalPlaces, minimumNumber * 10, minimumNumber)
-        Me.maximumNumber = If(decimalPlaces, maximumNumber * 10, maximumNumber)
+        Me.minimumDivide = minimumDivide
+        Me.minimumNumber = If(decimalPlaces, minimumNumber * 100, minimumNumber)
+        Me.maximumNumber = If(decimalPlaces, maximumNumber * 100, maximumNumber)
         Me.decimalPlaces = decimalPlaces
     End Sub
 
     Public Function getNewQuestion() As Tuple(Of String, Single)
         Dim numberOne As Single = getRandomNumber(minimumNumber, maximumNumber)
         Dim numberTwo As Single = getRandomNumber(minimumNumber, maximumNumber)
+        Dim randomOperator As String = getRandomOperator()
 
-        If decimalPlaces Then
-            numberOne = numberOne / 10
-            numberTwo = numberTwo / 10
+        If Not randomOperator = "/" And decimalPlaces Then
+            numberOne = numberOne / 100
+            numberTwo = numberTwo / 100
         End If
 
-        Dim randomOperator As String = getRandomOperator()
         Dim answer As Single
 
         If randomOperator = "/" Then 'Todo divide always returns half of numberOne :/
@@ -29,16 +31,15 @@
                 numberTwo = numberOneCopy
             End If
 
-            Dim tries As Integer = 0
-            Do While numberOne = numberTwo Or Not numberOne Mod numberTwo = 0
-                numberTwo = getRandomNumber(minimumNumber, numberOne - 1)
-                tries += 1
+            If Not numberOne Mod numberTwo = 0 Then
+                Dim list As List(Of Integer) = Enumerable.Range(minimumDivide, maximumNumber).Where(Function(i) numberOne Mod i = 0 And Not numberOne = i).ToList
 
-                If tries >= 200 Then 'Give in
+                If list.Count > 0 Then
+                    numberTwo = list.Item(getRandomNumber(0, list.Count - 1))
+                Else 'Give in
                     randomOperator = "+"
-                    Exit Do
                 End If
-            Loop
+            End If
 
             answer = numberOne / numberTwo
         ElseIf randomOperator = "+" Then
@@ -57,7 +58,7 @@
             answer = numberOne * numberTwo
         End If
 
-        Dim question As String = SuperSimpleRubbishFormat(numberOne) & " " & randomOperator & " " & SuperSimpleRubbishFormat(numberTwo)
+        Dim question As String = numberOne & " " & randomOperator & " " & numberTwo
         Return New Tuple(Of String, Single)(question, answer)
     End Function
 
@@ -74,10 +75,6 @@
         Else
             Return "*"
         End If
-    End Function
-
-    Public Shared Function SuperSimpleRubbishFormat(ByVal number As Single) As String
-        Return FormatNumber(number, If(number = CInt(number), 0, 2)) 'Check if number has precision
     End Function
 
     Public Shared Function getRandomNumber(ByVal lowerBound As Integer, ByVal upperBound As Integer) As Integer

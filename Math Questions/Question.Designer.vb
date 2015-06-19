@@ -74,11 +74,11 @@ Partial Class Question
         Me.EnterButton.Text = "Enter"
         Me.EnterButton.UseVisualStyleBackColor = True
         '
-        'TextBoxGreen
+        'InputGreenBackgroundWorker
         '
         Me.InputGreenBackgroundWorker.WorkerSupportsCancellation = True
         '
-        'TextBoxRed
+        'InputRedBackgroundWorker
         '
         Me.InputRedBackgroundWorker.WorkerSupportsCancellation = True
         '
